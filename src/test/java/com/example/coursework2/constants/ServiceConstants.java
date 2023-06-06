@@ -7,5 +7,8 @@ import java.util.Set;
 
 public class ServiceConstants {
     public static final Question RANDOM_QUESTION = new Question("question", "answer");
+    public static final Question RANDOM_QUESTION_MATH = new Question("question1", "answer1");
     public static final Set<Question> RANDOM_SET = new HashSet<>(Set.of(new Question("question", "answer")));
+    public static final Set<Question> RANDOM_SET_MATH = new HashSet<>(Set.of(new Question("question1", "answer1")));
+
 }

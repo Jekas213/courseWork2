@@ -2,6 +2,7 @@ package com.example.coursework2.service;
 
 import com.example.coursework2.domain.Question;
 import com.example.coursework2.exceptions.NotExistException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,25 +21,35 @@ import static org.mockito.Mockito.*;
 class ExaminerServiceImplTest {
 
     @Mock
-    private JavaQuestionService javaQuestionServiceMock;
+    private MathQuestionService mathMock;
+    @Mock
+    private JavaQuestionService javaNock;
     @InjectMocks
     private ExaminerServiceImpl out;
 
-    @Test
-    void getQuestionCorrect() {
-        when(javaQuestionServiceMock.getRandomQuestion()).thenReturn(RANDOM_QUESTION);
-        when(javaQuestionServiceMock.getAll()).thenReturn(Collections.unmodifiableSet(RANDOM_SET));
+    @BeforeEach
+    void setUp() {
+        out = new ExaminerServiceImpl(javaNock, mathMock);
 
-        Set<Question> expected = new HashSet<>(Set.of(RANDOM_QUESTION));
-
-        assertIterableEquals(Collections.unmodifiableSet(expected), out.getQuestion(1));
+        when(mathMock.getAll()).thenReturn(Collections.unmodifiableSet(RANDOM_SET_MATH));
+        when(javaNock.getAll()).thenReturn(Collections.unmodifiableSet(RANDOM_SET));
     }
 
     @Test
-    void getQuestionInCorrect() {
-        when(javaQuestionServiceMock.getAll()).thenReturn(Collections.unmodifiableSet(RANDOM_SET));
+    void getQuestion() {
+        when(mathMock.getRandomQuestion()).thenReturn(RANDOM_QUESTION_MATH);
+        when(javaNock.getRandomQuestion()).thenReturn(RANDOM_QUESTION);
 
-        assertThrows(NotExistException.class, () -> out.getQuestion(2));
+        Set<Question> extend = new HashSet<>();
+        extend.add(RANDOM_QUESTION_MATH);
+        extend.add(RANDOM_QUESTION);
+
+        assertIterableEquals(extend, out.getQuestion(2));
+
     }
 
+    @Test
+    void getQuestionIncorrect() {
+        assertThrows(NotExistException.class, () -> out.getQuestion(4));
+    }
 }
