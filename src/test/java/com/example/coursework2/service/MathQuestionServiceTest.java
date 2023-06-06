@@ -2,24 +2,25 @@ package com.example.coursework2.service;
 
 import com.example.coursework2.domain.Question;
 import com.example.coursework2.exceptions.NotFoundException;
-import com.example.coursework2.repository.JavaQuestionRepository;
+import com.example.coursework2.repository.MathQuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import static com.example.coursework2.constants.ServiceConstants.*;
+import static com.example.coursework2.constants.ServiceConstants.RANDOM_QUESTION;
+import static com.example.coursework2.constants.ServiceConstants.RANDOM_SET;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class JavaQuestionServiceTest {
+class MathQuestionServiceTest {
     @Mock
-    private JavaQuestionRepository mock;
+    private MathQuestionRepository mock;
     @InjectMocks
-    private JavaQuestionService out;
+    private MathQuestionService out;
 
 
     @Test
@@ -64,5 +65,4 @@ class JavaQuestionServiceTest {
 
         assertEquals(RANDOM_QUESTION, out.getRandomQuestion());
     }
-
 }
